@@ -1,0 +1,23 @@
+# INVALID: The required 'info' object is completely missing.
+# OpenAPI 3.0 spec requires 'info' with 'title' and 'version'.
+openapi: 3.0.3
+servers:
+  - url: https://gorest.co.in/public/v2
+paths:
+  /todos:
+    get:
+      summary: List all todos
+      operationId: listTodos
+      responses:
+        "200":
+          description: A list of todos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:     { type: integer }
+                    title:  { type: string }
+                    status: { type: string }

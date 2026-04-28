@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: GoRest - Delete Comment (Bearer Token)
+  description: Delete a comment by ID. Requires a Bearer token from https://gorest.co.in.
+  version: 1.0.0
+servers:
+  - url: https://gorest.co.in/public/v2
+security:
+  - bearerAuth: []
+paths:
+  /comments/{id}:
+    delete:
+      summary: Delete a comment by ID
+      operationId: deleteComment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, example: 201 }
+      responses:
+        "204":
+          description: Comment deleted successfully
+        "401":
+          description: Unauthorized — Bearer token missing or invalid
+        "404":
+          description: Comment not found
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

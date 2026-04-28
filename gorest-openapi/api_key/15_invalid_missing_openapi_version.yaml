@@ -1,0 +1,32 @@
+# INVALID: The required top-level 'openapi' field is missing entirely.
+# Every OpenAPI 3.x document MUST begin with 'openapi: 3.x.x'.
+# Without it, validators cannot determine which spec version to apply.
+info:
+  title: GoRest - Delete Todo (Bearer Token - Invalid)
+  version: 1.0.0
+servers:
+  - url: https://gorest.co.in/public/v2
+security:
+  - bearerAuth: []
+paths:
+  /todos/{id}:
+    delete:
+      summary: Delete a todo by ID
+      operationId: deleteTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Todo deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

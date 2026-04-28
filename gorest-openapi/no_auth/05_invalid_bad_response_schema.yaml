@@ -1,0 +1,25 @@
+# INVALID: Response schema references a non-existent component
+# '#/components/schemas/UserList'. No components section is defined.
+openapi: 3.0.3
+info:
+  title: GoRest - Get User by ID (Invalid)
+  version: 1.0.0
+servers:
+  - url: https://gorest.co.in/public/v2
+paths:
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: A single user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'

@@ -1,0 +1,32 @@
+# INVALID: The 'responses' field is required for every operation in OpenAPI 3.0.
+# The POST /posts operation below has no 'responses' defined — this violates the spec.
+openapi: 3.0.3
+info:
+  title: GoRest - Create Post (Basic Auth - Invalid)
+  version: 1.0.0
+servers:
+  - url: https://gorest.co.in/public/v2
+security:
+  - basicAuth: []
+paths:
+  /posts:
+    post:
+      summary: Create a new post
+      operationId: createPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id, title, body]
+              properties:
+                user_id: { type: integer }
+                title:   { type: string }
+                body:    { type: string }
+      # responses: <-- MISSING: required field omitted intentionally
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

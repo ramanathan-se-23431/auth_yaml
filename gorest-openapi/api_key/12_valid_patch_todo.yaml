@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: GoRest - Update Todo (Bearer Token)
+  description: Update a todo item. Requires a Bearer token from https://gorest.co.in.
+  version: 1.0.0
+servers:
+  - url: https://gorest.co.in/public/v2
+security:
+  - bearerAuth: []
+paths:
+  /todos/{id}:
+    patch:
+      summary: Partially update a todo
+      operationId: updateTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, example: 301 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:  { type: string,  example: "Updated task title" }
+                due_on: { type: string,  format: date-time }
+                status: { type: string,  enum: [pending, completed] }
+      responses:
+        "200":
+          description: Todo updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:      { type: integer, example: 301 }
+                  user_id: { type: integer, example: 1 }
+                  title:   { type: string,  example: "Updated task title" }
+                  due_on:  { type: string,  format: date-time }
+                  status:  { type: string,  example: "completed" }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Todo not found
+        "422":
+          description: Validation error
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

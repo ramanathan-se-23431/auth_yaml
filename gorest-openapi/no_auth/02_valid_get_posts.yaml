@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: GoRest - Get Posts
+  version: 1.0.0
+servers:
+  - url: https://gorest.co.in/public/v2
+paths:
+  /posts:
+    get:
+      summary: List all posts
+      operationId: listPosts
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, example: 1 }
+        - name: per_page
+          in: query
+          schema: { type: integer, example: 10 }
+      responses:
+        "200":
+          description: A list of posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:      { type: integer, example: 101 }
+                    user_id: { type: integer, example: 1 }
+                    title:   { type: string,  example: "Hello World" }
+                    body:    { type: string,  example: "Post content." }
