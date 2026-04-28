@@ -1,0 +1,38 @@
+# INVALID: The required top-level 'openapi' field is missing entirely.
+# Every OpenAPI 3.x document MUST begin with 'openapi: 3.x.x'.
+# Without it, validators cannot determine which specification version to apply.
+info:
+  title: GoRest - Delete Todo (API Key - Invalid)
+  description: Invalid spec - top-level openapi version field is missing.
+  version: 1.0.0
+servers:
+- url: https://gorest.co.in/public/v2
+security:
+- apiKeyAuth: []
+paths:
+  /todos/{id}:
+    delete:
+      summary: Delete a todo by ID
+      description: Permanently delete a todo item by its ID.
+      operationId: deleteTodo
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the todo item to delete
+        required: true
+        schema:
+          type: integer
+          example: 301
+      responses:
+        "204":
+          description: Todo deleted successfully
+        "401":
+          description: Unauthorized - Invalid or missing API Key
+        "404":
+          description: Todo not found
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

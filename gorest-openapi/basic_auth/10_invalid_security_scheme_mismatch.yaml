@@ -1,0 +1,37 @@
+# INVALID: The global security requirement references 'basicAuth' but the
+# securitySchemes section defines 'basicAuthentication' - name mismatch.
+# This causes an unresolvable security reference and fails validation.
+openapi: 3.0.3
+info:
+  title: GoRest - Delete Post (Basic Auth - Invalid)
+  description: Invalid spec - security scheme name mismatch between security and securitySchemes.
+  version: 1.0.0
+servers:
+- url: https://gorest.co.in/public/v2
+security:
+- basicAuth: []
+paths:
+  /posts/{id}:
+    delete:
+      summary: Delete a post by ID
+      description: Delete a post record by its ID.
+      operationId: deletePost
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the post to delete
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          description: Post deleted successfully
+        "401":
+          description: Unauthorized
+        "404":
+          description: Post not found
+components:
+  securitySchemes:
+    basicAuthentication:   # INVALID: should be 'basicAuth' to match the security reference above
+      type: http
+      scheme: basic

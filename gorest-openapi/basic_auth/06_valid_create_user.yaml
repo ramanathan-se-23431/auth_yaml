@@ -1,0 +1,59 @@
+openapi: 3.0.3
+info:
+  title: GoRest - Create User
+  description: Create a new user in GoRest. Requires Basic authentication.
+  version: 1.0.0
+servers:
+- url: https://gorest.co.in/public/v2
+security:
+- basicAuth: []
+paths:
+  /users:
+    post:
+      summary: Create a new user
+      description: Create a new user record in GoRest. Requires Basic authentication.
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              - email
+              - gender
+              - status
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Full name of the user (Mandatory)
+                  example: John Doe
+                email:
+                  type: string
+                  description: Email address of the user (Mandatory)
+                  example: john@example.com
+                gender:
+                  type: string
+                  description: Gender of the user (Mandatory)
+                  enum:
+                  - male
+                  - female
+                status:
+                  type: string
+                  description: Account status of the user (Mandatory)
+                  enum:
+                  - active
+                  - inactive
+      responses:
+        "201":
+          description: User created successfully
+        "401":
+          description: Unauthorized - Invalid or missing credentials
+        "422":
+          description: Unprocessable Entity - Validation failed
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

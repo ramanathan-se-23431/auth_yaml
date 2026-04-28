@@ -1,19 +1,17 @@
-# INVALID: The 'responses' field is required for every operation in OpenAPI 3.0.
-# The POST /posts operation below has no 'responses' defined - this violates the spec.
 openapi: 3.0.3
 info:
-  title: GoRest - Create Post (Basic Auth - Invalid)
-  description: Invalid spec - required responses field is missing from the operation.
+  title: GoRest - Create Post
+  description: Create a new post in GoRest. Requires API Key authentication via X-API-Key header.
   version: 1.0.0
 servers:
 - url: https://gorest.co.in/public/v2
 security:
-- basicAuth: []
+- apiKeyAuth: []
 paths:
   /posts:
     post:
       summary: Create a new post
-      description: Create a new post record in GoRest.
+      description: Create a new post record in GoRest. Requires API Key in the X-API-Key header.
       operationId: createPost
       requestBody:
         required: true
@@ -29,15 +27,25 @@ paths:
                 user_id:
                   type: integer
                   description: ID of the user creating the post (Mandatory)
+                  example: 1
                 title:
                   type: string
                   description: Title of the post (Mandatory)
+                  example: My First Post
                 body:
                   type: string
                   description: Body content of the post (Mandatory)
-      # responses: <-- MISSING: required field omitted intentionally
+                  example: This is the post body content.
+      responses:
+        "201":
+          description: Post created successfully
+        "401":
+          description: Unauthorized - Invalid or missing API Key
+        "422":
+          description: Unprocessable Entity - Validation failed
 components:
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

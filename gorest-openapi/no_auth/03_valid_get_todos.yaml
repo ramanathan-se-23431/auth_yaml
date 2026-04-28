@@ -1,16 +1,16 @@
 openapi: 3.0.3
 info:
-  title: GoRest - List Users
-  description: Public endpoint to list all users. No authentication required.
+  title: GoRest - List Todos
+  description: Public endpoint to list all todos. No authentication required.
   version: 1.0.0
 servers:
 - url: https://gorest.co.in/public/v2
 paths:
-  /users:
+  /todos:
     get:
-      summary: List all users
-      description: Retrieve a paginated list of all users from GoRest.
-      operationId: listUsers
+      summary: List all todos
+      description: Retrieve a paginated list of all todo items from GoRest.
+      operationId: listTodos
       parameters:
       - name: page
         in: query
@@ -28,13 +28,13 @@ paths:
           example: 10
       - name: status
         in: query
-        description: Filter users by status
+        description: Filter todos by status
         required: false
         schema:
           type: string
           enum:
-          - active
-          - inactive
+          - pending
+          - completed
       responses:
         "200":
-          description: A list of users retrieved successfully
+          description: A list of todos retrieved successfully

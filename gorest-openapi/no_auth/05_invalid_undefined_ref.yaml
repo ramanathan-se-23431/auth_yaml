@@ -1,0 +1,31 @@
+# INVALID: Response schema uses $ref pointing to '#/components/schemas/UserList'
+# but no 'components' section is defined anywhere in this file.
+openapi: 3.0.3
+info:
+  title: GoRest - Get User by ID (Invalid)
+  description: Invalid spec - references an undefined component schema.
+  version: 1.0.0
+servers:
+- url: https://gorest.co.in/public/v2
+paths:
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      description: Retrieve a single user by their ID.
+      operationId: getUser
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the user to retrieve
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: A single user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+        "404":
+          description: User not found

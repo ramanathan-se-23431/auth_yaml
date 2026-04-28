@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: GoRest - Update User
+  description: Partially update an existing user in GoRest. Requires Basic authentication.
+  version: 1.0.0
+servers:
+- url: https://gorest.co.in/public/v2
+security:
+- basicAuth: []
+paths:
+  /users/{id}:
+    patch:
+      summary: Partially update a user
+      description: Update one or more fields of an existing user. Requires Basic authentication.
+      operationId: updateUser
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the user to update
+        required: true
+        schema:
+          type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Updated full name of the user (Optional)
+                  example: Updated Name
+                email:
+                  type: string
+                  description: Updated email address of the user (Optional)
+                  example: updated@example.com
+                status:
+                  type: string
+                  description: Updated account status of the user (Optional)
+                  enum:
+                  - active
+                  - inactive
+      responses:
+        "200":
+          description: User updated successfully
+        "401":
+          description: Unauthorized - Invalid or missing credentials
+        "404":
+          description: User not found
+        "422":
+          description: Unprocessable Entity - Validation failed
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

@@ -1,26 +1,31 @@
 openapi: 3.0.3
 info:
-  title: GoRest - Delete User (Basic Auth)
+  title: GoRest - Delete User
+  description: Delete an existing user in GoRest. Requires Basic authentication.
   version: 1.0.0
 servers:
-  - url: https://gorest.co.in/public/v2
+- url: https://gorest.co.in/public/v2
 security:
-  - basicAuth: []
+- basicAuth: []
 paths:
   /users/{id}:
     delete:
       summary: Delete a user by ID
+      description: Permanently delete a user record by their ID. Requires Basic authentication.
       operationId: deleteUser
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema: { type: integer, example: 1 }
+      - name: id
+        in: path
+        description: The ID of the user to delete
+        required: true
+        schema:
+          type: integer
+          example: 1
       responses:
         "204":
           description: User deleted successfully
         "401":
-          description: Unauthorized
+          description: Unauthorized - Invalid or missing credentials
         "404":
           description: User not found
 components:

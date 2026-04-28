@@ -1,0 +1,59 @@
+openapi: 3.0.3
+info:
+  title: GoRest - Update Todo
+  description: Partially update a todo item in GoRest. Requires API Key authentication via X-API-Key header.
+  version: 1.0.0
+servers:
+- url: https://gorest.co.in/public/v2
+security:
+- apiKeyAuth: []
+paths:
+  /todos/{id}:
+    patch:
+      summary: Partially update a todo
+      description: Update one or more fields of an existing todo. Requires API Key in the X-API-Key header.
+      operationId: updateTodo
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the todo item to update
+        required: true
+        schema:
+          type: integer
+          example: 301
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Updated title of the todo item (Optional)
+                  example: Updated task title
+                due_on:
+                  type: string
+                  format: date-time
+                  description: Updated due date and time of the todo (Optional)
+                status:
+                  type: string
+                  description: Updated status of the todo item (Optional)
+                  enum:
+                  - pending
+                  - completed
+      responses:
+        "200":
+          description: Todo updated successfully
+        "401":
+          description: Unauthorized - Invalid or missing API Key
+        "404":
+          description: Todo not found
+        "422":
+          description: Unprocessable Entity - Validation failed
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
